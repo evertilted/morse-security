@@ -1,0 +1,23 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "morse-auth",
+    "version": "1.0"
+  },
+  "paths": {
+    "/Session": {
+      "get": {
+        "tags": [
+          "Session"
+        ],
+        "operationId": "GetToken",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": { }
+}

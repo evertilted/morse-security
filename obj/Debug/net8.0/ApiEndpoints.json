@@ -1,0 +1,13 @@
+[
+  {
+    "ContainingType": "morse_auth.Controllers.SessionController",
+    "Method": "Get",
+    "RelativePath": "Session",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [],
+    "EndpointName": "GetToken"
+  }
+]
