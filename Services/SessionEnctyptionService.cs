@@ -5,11 +5,18 @@ using System.Security.Cryptography;
 
 namespace morse_auth.Services
 {
-    public class TokenService
+    public class SessionEnctyptionService
     {
+        /// <summary> Creates a pair of keys for a session </summary>
+        /// <returns> The public key </returns>
+        public string GetPublicEncryptionKey()
+        {
+            return EncryptionKeys.PublicKey;
+        }
+
         /// <summary> Returns existing or creates a new JWT </summary>
         /// <returns> A JWT </returns>
-        public object Get()
+        public object GetJWT()
         {
             var rsa = RSA.Create();
             rsa.ImportFromPem(TokenParams.PrivateKey);
