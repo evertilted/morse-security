@@ -1,8 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
 using morse_auth;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 

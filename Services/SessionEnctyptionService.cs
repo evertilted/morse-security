@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using morse_auth.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -16,7 +17,7 @@ namespace morse_auth.Services
 
         /// <summary> Returns existing or creates a new JWT </summary>
         /// <returns> A JWT </returns>
-        public object GetJWT()
+        public object GetJWT(UserDTO user)
         {
             var rsa = RSA.Create();
             rsa.ImportFromPem(TokenParams.PrivateKey);
@@ -28,10 +29,10 @@ namespace morse_auth.Services
 
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, "david_tiltman"),
-            new Claim(ClaimTypes.Name, "David Tiltman"),
+            new Claim(ClaimTypes.NameIdentifier, user.Login),
+            new Claim(ClaimTypes.Name, user.Login),
             new Claim(ClaimTypes.Role, "Admin")
-        };
+            };
 
             var token = new JwtSecurityToken(
                 issuer: TokenParams.Issuer,

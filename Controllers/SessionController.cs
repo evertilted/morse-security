@@ -25,14 +25,9 @@ namespace morse_auth.Controllers
         }
 
         [HttpPost(Name = "GetSessionToken")]
-        public IActionResult GetSessionToken([FromBody]LoginRequestDTO data)
+        public IActionResult GetSessionToken([FromBody]UserDTO data)
         {
-            if (string.IsNullOrEmpty(data.Login) || string.IsNullOrEmpty(data.Password))
-            {
-                return BadRequest("Please provide a valid login and password");
-            }
-
-            return Ok(_sessionEncryptionService.GetJWT());
+            return Ok(_sessionEncryptionService.GetJWT(data));
         }
     }
 }
