@@ -11,11 +11,13 @@ namespace morse_auth.Controllers
     {
         private readonly ILogger<SessionController> _logger;
 
-        private SessionEnctyptionService _sessionEncryptionService = new SessionEnctyptionService();
+        private SessionEnctyptionService _sessionEncryptionService;
 
         public SessionController(ILogger<SessionController> logger)
         {
             _logger = logger;
+
+            _sessionEncryptionService = new SessionEnctyptionService();
         }
 
         [HttpGet]
