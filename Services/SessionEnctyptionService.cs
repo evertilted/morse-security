@@ -17,7 +17,7 @@ namespace morse_auth.Services
 
         /// <summary> Returns existing or creates a new JWT </summary>
         /// <returns> A JWT </returns>
-        public object GetJWT(UserDTO user)
+        public object GetJWT(AuthUserDTO user)
         {
             var rsa = RSA.Create();
             rsa.ImportFromPem(TokenParams.PrivateKey);
@@ -31,7 +31,7 @@ namespace morse_auth.Services
             {
             new Claim(ClaimTypes.NameIdentifier, user.Login),
             new Claim(ClaimTypes.Name, user.Login),
-            new Claim(ClaimTypes.Role, "Admin")
+            new Claim(ClaimTypes.Role, "User")
             };
 
             var token = new JwtSecurityToken(

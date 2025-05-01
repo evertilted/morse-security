@@ -36,12 +36,27 @@ builder.Services.AddDbContextFactory<MSDBContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 #endregion
 
+#region cors configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("web-client", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .SetPreflightMaxAge(TimeSpan.FromMinutes(10));
+    });
+});
+#endregion
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthorization();
+
+app.UseCors("web-client");
 
 app.MapControllers();
 

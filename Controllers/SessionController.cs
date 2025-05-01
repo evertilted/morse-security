@@ -26,10 +26,12 @@ namespace morse_auth.Controllers
             return Ok(_sessionEncryptionService.GetPublicEncryptionKey());
         }
 
+        /*
         [HttpPost(Name = "GetSessionToken")]
         public IActionResult GetSessionToken([FromBody]UserDTO data)
         {
             return Ok(_sessionEncryptionService.GetJWT(data));
         }
+        */
     }
 }

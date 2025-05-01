@@ -8,10 +8,12 @@ namespace morse_auth.Services
     public class AuthenticationService
     {
         private IDbContextFactory<MSDBContext> _contextFactory;
+        private SessionEnctyptionService _sessionEncryptionService;
 
         public AuthenticationService(IDbContextFactory<MSDBContext> contextFactory)
         {
             _contextFactory = contextFactory;
+            _sessionEncryptionService = new SessionEnctyptionService();
         }
 
         public UserDTO Register(AuthUserDTO data)
@@ -38,6 +40,7 @@ namespace morse_auth.Services
 
             return new UserDTO
             {
+                AccessToken = _sessionEncryptionService.GetJWT(data),
                 Id = createdUser.Id,
                 Login = data.Login,
             };
@@ -59,6 +62,7 @@ namespace morse_auth.Services
                     throw new InvalidDataException("Invalid password");
                 }
 
+                user.AccessToken = _sessionEncryptionService.GetJWT(data);
                 user.Id = foundUser.Id;
                 user.Login = foundUser.Login;
                 user.DisplayName = foundUser.DisplayName;
