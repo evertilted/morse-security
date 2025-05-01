@@ -2,6 +2,9 @@
 
 namespace morse_auth
 {
+    /// <summary>
+    /// Parameters for JWTs
+    /// </summary>
     public static class TokenParams
     {
         public const string Issuer = "morse-security";

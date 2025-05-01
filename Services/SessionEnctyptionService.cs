@@ -8,7 +8,7 @@ namespace morse_auth.Services
 {
     public class SessionEnctyptionService
     {
-        /// <summary> Creates a pair of keys for a session </summary>
+        /// <summary> Returns the key to decrypt this server's responses </summary>
         /// <returns> The public key </returns>
         public string GetPublicEncryptionKey()
         {

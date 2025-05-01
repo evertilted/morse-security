@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BCrypt.Net;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using morse_auth.Database;
@@ -22,7 +24,7 @@ namespace morse_auth.Controllers
             _authenticationService = new AuthenticationService(contextFactory);
         }
 
-        [HttpPost(Name = "Register")]
+        [HttpPost(Name = "register")]
         public IActionResult Register([FromBody]AuthUserDTO data)
         {
             if (!ModelState.IsValid)
@@ -38,9 +40,13 @@ namespace morse_auth.Controllers
             {
                 return BadRequest($"User with such login ({data.Login}) already exists");
             }
+            catch (SaltParseException)
+            {
+                return StatusCode(500, "An error has occured during registration");
+            }
         }
 
-        [HttpPost(Name = "Login")]
+        [HttpPost(Name = "login")]
         public IActionResult Login([FromBody]AuthUserDTO data)
         {
             if (!ModelState.IsValid)
@@ -55,6 +61,14 @@ namespace morse_auth.Controllers
             catch (InvalidDataException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(500, "An error has occured during singing in");
+            }
+            catch (SaltParseException)
+            {
+                return StatusCode(500, "An error has occured during singing in");
             }
         }
     }

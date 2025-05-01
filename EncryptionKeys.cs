@@ -2,6 +2,9 @@
 
 namespace morse_auth
 {
+    /// <summary>
+    /// The keys for encrypting outcoming data
+    /// </summary>
     public static class EncryptionKeys
     {
         /*

@@ -1,6 +1,6 @@
-@morse_auth_HostAddress = http://localhost:5237
+@morse_security_HostAddress = http://localhost:5237
 
-GET {{morse_auth_HostAddress}}/weatherforecast/
+GET {{morse_security_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
