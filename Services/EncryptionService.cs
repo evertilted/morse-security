@@ -3,10 +3,11 @@ using morse_auth.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace morse_auth.Services
 {
-    public class SessionEnctyptionService
+    public class EncryptionService
     {
         /// <summary> Returns the key to decrypt this server's responses </summary>
         /// <returns> The public key </returns>
@@ -47,6 +48,30 @@ namespace morse_auth.Services
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 expires = token.ValidTo
             };
+        }
+
+        /// <summary>
+        /// Decrypts an item encrypted by the client
+        /// </summary>
+        /// <param name="item">The item to be decrypted</param>
+        /// <returns>A string with decrypted item</returns>
+        /// <exception cref="CryptographicException">Throws if failed to decrypt</exception>
+        public string DecryptItem(string item)
+        {
+            try
+            {
+                byte[] encryptedItem = Convert.FromBase64String(item);
+                using (var rsa = RSA.Create())
+                {
+                    rsa.ImportFromPem(EncryptionKeys.PrivateKey);
+                    var decryptedItem = rsa.Decrypt(encryptedItem, RSAEncryptionPadding.Pkcs1);
+                    return Encoding.UTF8.GetString(decryptedItem);
+                }
+            }
+            catch (CryptographicException)
+            {
+                throw new CryptographicException("The client encryption key is invalid");
+            }
         }
     }
 }
