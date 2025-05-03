@@ -21,8 +21,8 @@ namespace morse_auth.Services
         {
             UserModel newUser = new UserModel()
             {
-                Login = _encryptionService.DecryptItem(data.Login),
-                Password = BCrypt.Net.BCrypt.HashPassword(_encryptionService.DecryptItem(data.Password))
+                Login = data.Login,
+                Password = BCrypt.Net.BCrypt.HashPassword(data.Password)
             };
             UserModel createdUser = new UserModel();
 
@@ -53,12 +53,12 @@ namespace morse_auth.Services
 
             using (MSDBContext context = _contextFactory.CreateDbContext())
             {
-                UserModel? foundUser = context.Users.FirstOrDefault(u => u.Login == _encryptionService.DecryptItem(data.Login));
+                UserModel? foundUser = context.Users.FirstOrDefault(u => u.Login == data.Login);
                 if (foundUser == null)
                 {
                     throw new InvalidDataException("User not found");
                 }
-                if (!BCrypt.Net.BCrypt.Verify(_encryptionService.DecryptItem(data.Password), foundUser.Password))
+                if (!BCrypt.Net.BCrypt.Verify(data.Password, foundUser.Password))
                 {
                     throw new InvalidDataException("Invalid password");
                 }

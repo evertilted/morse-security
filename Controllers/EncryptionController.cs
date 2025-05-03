@@ -19,15 +19,5 @@ namespace morse_auth.Controllers
 
             _encryptionService = new EncryptionService();
         }
-
-        /// <summary>
-        /// Returns the public key that the client will use to encrypt data before sending to server
-        /// </summary>
-        /// <returns>The public encryption key</returns>
-        [HttpGet(Name = "clientEncryptionKey")]
-        public IActionResult ClientEncryptionKey()
-        {
-            return Ok(_encryptionService.GetPublicEncryptionKey());
-        }
     }
 }
