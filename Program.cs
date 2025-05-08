@@ -41,7 +41,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("web-client", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins("https://localhost:3000")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .SetPreflightMaxAge(TimeSpan.FromMinutes(10));
@@ -51,12 +51,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-app.UseAuthorization();
-
 app.UseCors("web-client");
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllers();
 

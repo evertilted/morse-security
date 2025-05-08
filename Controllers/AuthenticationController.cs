@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 using morse_auth.Database;
 using morse_auth.DTO;
 using morse_auth.Services;
@@ -24,7 +25,7 @@ namespace morse_auth.Controllers
             _authenticationService = new AuthenticationService(contextFactory);
         }
 
-        [HttpPost(Name = "register")]
+        [HttpPost(Name = "Register")]
         public IActionResult Register([FromBody]AuthUserDTO data)
         {
             if (!ModelState.IsValid)
@@ -46,7 +47,7 @@ namespace morse_auth.Controllers
             }
         }
 
-        [HttpPost(Name = "login")]
+        [HttpPost(Name = "Login")]
         public IActionResult Login([FromBody]AuthUserDTO data)
         {
             if (!ModelState.IsValid)
@@ -70,6 +71,13 @@ namespace morse_auth.Controllers
             {
                 return StatusCode(500, "An error has occured during singing in");
             }
+        }
+
+        [Authorize]
+        [HttpPost(Name = "ValidateJWT")]
+        public IActionResult ValidateJWT()
+        {
+            return Ok();
         }
     }
 }
