@@ -2,6 +2,9 @@
 
 namespace morse_auth.DTO
 {
+    /// <summary>
+    /// The data provided by the client on authentication
+    /// </summary>
     public class AuthUserDTO
     {
         [Required]
